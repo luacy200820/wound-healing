@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/loaders.css/0.1.2/loaders.css.js"></script>
+    <script type="text/css" src="https: //cdnjs.cloudflare.com/ajax/libs/loaders.css/0.1.2/loaders.min.css;"></script>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script>
+      $(".loader-inner").loaders();
+      </script>
+ 
+  </head>
+  <body>
+    <div class="input">
+      <h1>Wound segmentation</h1>
+
+      <form
+        action="{{url_for('upload')}}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <input type="file" name="file" style="margin-top: 20px" />
+        <input
+          type="submit"
+          value="上傳"
+          class="button-new"
+          style="margin-top: 15px"
+        />
+      </form>
+      
+
+      <div class="image_container">
+        <div class="box-wrapper">
+        <div class="left-box">
+          {% if imagename %}
+          <div id="ori">原圖</div>
+          <div id="ori_img">
+            <img
+              src="{{url_for('static',filename='output/'+imagename)}}"
+              alt=""
+              width="300px"
+              height="300px"
+            />
+          </div>
+          <div  class="area_res"></div>
+          {% endif %}
+        </div>
+        <div class="right-box">
+          {% if outputImageName %}
+          <div id="result">分割結果</div>
+          <div id="result_img">
+            <img
+              src="{{url_for('static',filename='output/'+outputImageName)}}"
+              alt=""
+              width="300px"
+              height="300px"
+            />
+          </div>
+          
+          {% endif %}
+        </div>
+      </div>
+        <div class="bottom-box">
+          {% if area %}
+          <div class="area_res">傷口總面積:{{ area }} </div>
+          {% endif %}
+          {% if tissue_area_nschar %}
+          <div class="area_res">焦痂面積:{{ tissue_area_nschar }} </div>
+          {% endif %}
+          {% if tissue_area_slough %}
+          <div class="area_res">腐肉面積:{{ tissue_area_slough }} </div>
+          {% endif %}
+          {% if tissue_area_granulation %}
+          <div class="area_res">肉芽組織面積:{{ tissue_area_granulation }} </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="tissue">
+        <!-- 做四個block，組織比例-->
+      </div>
+    </div>
+  </body>
+</html>
