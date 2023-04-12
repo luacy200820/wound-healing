@@ -14,9 +14,9 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = os.path.dirname(__file__)
 
 
-@app.route('/')
-def test():
-    return "test web"
+
+# def test():
+#     return "test web"
 
 ALLOWED_EXTENSIONS = set(['png','jpg','JPG','PNG'])
 def allowed_file(filename):
@@ -24,7 +24,8 @@ def allowed_file(filename):
 
 app.send_file_max_age_default = timedelta(seconds=2)
 
-@app.route('/home',methods=['POST','GET'])
+# @app.route('/home',methods=['POST','GET'])
+@app.route('/',methods=['POST','GET'])
 def upload():
     if request.method == "POST":
         f = request.files['file']
@@ -61,9 +62,9 @@ def upload():
             s_area =str( tissue_area[1]) +" %"
             g_area = str(tissue_area[2]) +" %"
         else:
-            n_area = str(real_num*tissue_area[0]) +" (cm^2)"
-            s_area = str(real_num*tissue_area[1])+" (cm^2)"
-            g_area = str(real_num*tissue_area[2])+" (cm^2)"
+            n_area = str(round(real_num*tissue_area[0],3)) +" (cm^2)"
+            s_area = str(round(real_num*tissue_area[1],3))+" (cm^2)"
+            g_area = str(round(real_num*tissue_area[2],3))+" (cm^2)"
 
         
         filename_result = result.split('\\')[-1]
